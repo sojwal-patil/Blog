@@ -1,4 +1,5 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
+from django.views.decorators.http import require_POST
 from .forms import AuthorForm,BlogForm
 from .models import Author,BlogPost
 from django.contrib.auth.models import User
@@ -21,8 +22,21 @@ def newpost(request):
         blog_form = BlogForm(request.POST)
         if blog_form.is_valid():
             blog_form.save()
+            return redirect("dashboard")
     context = {
         "blog_form" : blog_form
     }
-    return render(request,"newpost.html",context)\
-    
+    return render(request,"newpost.html",context)
+
+@require_POST    
+def delete(request,id):
+    post = get_object_or_404(BlogPost,pk=id)
+    post.delete()
+    return redirect("dashboard")
+
+def singlepost(request,slug):
+    post = get_object_or_404(BlogPost,slug)
+    context = {
+        "post" : post
+    }
+    return render(request,"singlepost.html")

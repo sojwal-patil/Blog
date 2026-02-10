@@ -9,43 +9,42 @@
 
     {% comment %} daisy ui CDN {% endcomment %}
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
 {% comment %} Font Awesome CDN {% endcomment %}
     <script src="https://kit.fontawesome.com/96d552640e.js" crossorigin="anonymous"></script>
 
 </head>
-<body class="select-none flex">
+<body class="select-none">
 
-    <div class="leftpanel border-[1px] border-black/50 w-[170px] text-center h-screen">
-    <ul class="p-3 dashboard-left-panel-ul">
-        <li><h1>Blogify</h1></li>
-        <li>
-            <button class="btn m-[5px] border-[1px] border-black">
-                <a href="{% url "newpost" %}">
-                   New Post
-                 </a>
-            </button>
-        </li>
-
-        <li class="p-2 hover:bg-gray-100"><a href="">Posts</a></li>
-        <li class="p-2 hover:bg-gray-100"><a href="">Pages</a></li>
-        <li class="p-2 hover:bg-gray-100"><a href="">Stats</a></li>
-        <li class="p-2 hover:bg-gray-100"><a href=""><i class="fa-solid fa-arrow-up-right-from-square text-gray-500"></i>&nbsp;View Blog</a></li>
-    </ul>
-    </div>
-
-    <div class="postarea">
-        <ul>
-            {%for post in blogposts%}
-            <li>
-                <h3>{{post.title}}</h3>
-                <h4>{{post.date}}</h4><br>
-            </li>
-            {%endfor%}
+<div class="flex w-full items-center justify-center p-2 border">
+    <a href="{% url "index" %}"><h1 class="text-xl font-bold p-2 px-7 text-red-600">Blogify</h1></a>
+    <nav>
+        <ul class="flex gap-6 dashboard-menu-ul">
+            <li class="text-red-600"><a href="">Posts <i class="fa-solid fa-pager"></i></a></li>
+            <li><a href="">Pages <i class="fa-regular fa-note-sticky"></i></a></li>
+            <li><a href="">Stats <i class="fa-solid fa-chart-line"></i></a></li>
+            <li><a href="{% url "index" %}">View Blog <i class="fa-solid fa-arrow-up-right-from-square"></i></a></li>
         </ul>
-    </div>
+    </nav>
+    <a href="{% url "newpost" %}"><button class="btn mx-5">Create Post <i class="fa-solid fa-plus"></i></button></a>
+</div>
     
+        <div class="post-area flex justify-evenly">
+            {%for post in blogposts%}
+            <div class="single-post-dash">
+                <h3>{{post.title}}</h3>
+                <p>{{post.date}} 
+                    <form action="{% url "delete" post.id %}" method="POST">
+                        {%csrf_token%}
+                        <button class="btn">Delete</button>
+                    </form>
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+
 
 </body>
 </html>
