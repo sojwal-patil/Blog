@@ -35,8 +35,8 @@ def delete(request,id):
     return redirect("dashboard")
 
 def singlepost(request,slug):
-    post = get_object_or_404(BlogPost,slug)
+    post = get_object_or_404(BlogPost,slug=slug)
     context = {
         "post" : post
     }
-    return render(request,"singlepost.html")
+    return render(request,"singlepost.html",context)
