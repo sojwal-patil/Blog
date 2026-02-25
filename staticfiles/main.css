@@ -3,3 +3,7 @@
 * {
     font-family: Inter;
 }
+
+.register_form_input{
+    margin: 8px;
+}

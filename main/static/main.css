@@ -2,8 +2,10 @@
 
 * {
     font-family: Inter;
+    user-select: none;
 }
 
 .register_form_input{
     margin: 8px;
 }
+

@@ -15,17 +15,41 @@ from django.contrib.auth.decorators import login_required
 # Message
 from django.contrib import messages
 
+from django.shortcuts import render
+
 def index(request):
-    search_form = SearchForm()
+    search_results = Post.objects.all()
+
     if request.method == "POST":
         search_form = SearchForm(request.POST)
+
         if search_form.is_valid():
-            search_title = search_form.cleaned_data["search_title"]
-            search_result = Post.objects.all().filter(Post.title)
-    context = {
-        "search_form" : search_form
-    }
-    return render(request,"index.html",context)
+            search_title = search_form.cleaned_data.get("search_title")
+
+            if search_title:
+                search_results = Post.objects.filter(
+                    title__icontains=search_title
+                )
+
+        # return partial for AJAX
+        return render(
+            request,
+            "results_partial.html",
+            {"search_results": search_results}
+        )
+
+    # Normal page load
+    search_form = SearchForm()
+
+    return render(request, "index.html", {
+        "search_form": search_form,
+        "search_results": search_results,
+    })
+
+
+def single_post(request,slug):
+    return render(request,"singlepost.html")
+
 
 def register_author_view(request):
     register_form = RegisterForm()
@@ -53,6 +77,8 @@ def register_author_view(request):
         "register_form" : register_form,
     }
     return render(request,"register.html",context)
+
+
 
 @login_required
 def dashboard(request):
@@ -83,20 +109,28 @@ def login_view(request):
     return render(request,"login.html",context)
 
 
+
 def logout_view(request):
     logout(request)
     return redirect("index")
 
+
+
 @login_required
 def create(request):
     post_form = PostForm()
+    user = request.user
     if request.method == "POST":
         post_form = PostForm(request.POST)
+        
         if post_form.is_valid():
-            post_form.save()
+            post = post_form.save(commit=False)
+            author = Author.objects.get(user=request.user)
+            post.author = author
+            post.save()
             return redirect("index")
     context = {
-        "post_form" : post_form
+        "post_form" : post_form,
+        "user" : user,
     }
     return render(request,"create.html",context)
-

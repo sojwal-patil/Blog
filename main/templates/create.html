@@ -9,22 +9,25 @@
         display: block !important;
     }
     .cke {
-        width: 100% !important;
+        width: 70% !important;
+        margin:auto;
+        display:block;
     }
 </style>
 
 
-<form action="" method="POST">
+<form method="POST">
     {% csrf_token %}
     
     {{ post_form.media }}
 
-    <div class="form-group">
-        {{ post_form.title }} <button type="submit" class="btn">Save</button>
+    <div class="form-group flex justify-center my-5">
+        {{ post_form.title }} {{post_form.category}} <button type="submit" class="btn ml-[5px]">Save</button>
     </div>
 
-    <div class="form-group">
-        {{ post_form.content }} </div>
+    <div class="form-group" class="m-auto block">
+        {{ post_form.content }}
+    </div>
 
 </form>
 {% endblock index-main %}

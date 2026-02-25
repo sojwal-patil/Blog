@@ -34,7 +34,7 @@
       </div>
       <ul
         tabindex="-1"
-        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+        class="menu menu-m dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
         <li><a>Homepage</a></li>
         <li><a>Portfolio</a></li>
         <li><a>About</a></li>
@@ -42,7 +42,7 @@
     </div>
   </div>
   <div class="navbar-center">
-    <a class="btn btn-ghost text-xl" href="{% url "index" %}">Blog</a>
+    <a class="btn btn-ghost text-xl" href="{% url "index" %}"><img src="{% static "logo_blogify.png" %}" alt=""></a>
   </div>
   <div class="navbar-end">
     <button class="btn btn-ghost btn-circle" onclick="my_modal_2.showModal()">
@@ -57,11 +57,20 @@
 
     <dialog id="my_modal_2" class="modal">
   <div class="modal-box">
-    <form method="POST">
-      {%csrf_token%}
-        {{search_form}}
-        <button class="btn mx-auto block my-4">Search</button>
-    </form>
+
+
+<form id="search-form">
+    {% csrf_token %}
+    {{ search_form }}
+    <button type="submit" class="btn">Search</button>
+</form>
+
+<div id="results">
+    {% for post in search_results %}
+        <div><a href="">{{ post.title }}</a></div>
+    {% endfor %}
+</div>
+
 
 </div>
   <form method="dialog" class="modal-backdrop">
@@ -71,5 +80,27 @@
 
 
     {% block index-main %} {% endblock index-main %}
+
+    <script>
+document.getElementById("search-form").addEventListener("submit", function(e) {
+    e.preventDefault(); // stop refresh
+
+    const formData = new FormData(this);
+
+    fetch("/", {
+        method: "POST",
+        body: formData,
+        headers: {
+            "X-CSRFToken": formData.get("csrfmiddlewaretoken")
+        }
+    })
+    .then(res => res.text())
+    .then(html => {
+        document.getElementById("results").innerHTML = html;
+    });
+});
+</script>
+
+
   </body>
 </html>

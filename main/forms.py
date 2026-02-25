@@ -32,14 +32,17 @@ class SearchForm(forms.Form):
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ["title", "content"]
+        fields = ["title", "content" , "category"]
 
         widgets = {
             "title": forms.TextInput(attrs={
-                "class": "input input-bordered w-full", 
+                "class": "input input-bordered w-[80%]", 
                 "placeholder": "Enter Title"
             }),
             "content": CKEditorWidget(attrs={
                 "style": "width: 100%;", # Use 'style' for width, or config below
             }),
+            "category" : forms.Select(attrs={
+                "class" : "input select w-min"
+            })
         }

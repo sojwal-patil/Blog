@@ -128,6 +128,6 @@ MEDIA_URL = "media/"
 
 CKEDITOR_CONFIGS = {
     'default': {
-        'width': '100%', 
+        'width': '70%', 
     },
 }

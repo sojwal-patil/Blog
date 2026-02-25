@@ -1,0 +1,7 @@
+{% for post in search_results %}
+    <div class="post">
+        {{ post.title }}
+    </div>
+{% empty %}
+    <p>No results found</p>
+{% endfor %}

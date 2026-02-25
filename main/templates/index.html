@@ -2,7 +2,10 @@
 
 {% block index-main %}
 
-</style>
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque eius eos, nobis quasi ab laudantium ut error ipsa hic dicta!
+<ul>
+    {% for sr in search_results %}
+        <li><a href="{% url "single_post" sr.slug %}" >{{sr.title}}</a></li>
+    {% endfor %}
+</ul>
 
 {% endblock index-main %}
