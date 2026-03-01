@@ -1,0 +1,78 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register</title>
+
+  <!-- DaisyUI + Tailwind -->
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="{% static 'main.css' %}">
+</head>
+
+<body class="bg-gray-50 min-h-screen flex items-center justify-center">
+
+  <div class="w-full max-w-md px-6">
+
+    <!-- Logo + Heading -->
+    <div class="text-center mb-8">
+      <img src="{% static 'logo_blogify.png' %}"
+           class="h-10 mx-auto object-contain mt-2"
+           alt="Logo">
+      <h1 class="text-2xl font-semibold mt-6 text-gray-900">
+        Welcome to Blogify
+      </h1>
+      <p class="text-sm text-gray-500 mt-2">
+        Create your account
+      </p>
+    </div>
+
+    <!-- Card -->
+    <div class="bg-white shadow-sm rounded-2xl p-8 border border-gray-100">
+
+      <form method="POST" class="space-y-5">
+        {% csrf_token %}
+
+        <div class="space-y-4">
+          {{ register_form }}
+        </div>
+
+        <!-- Messages -->
+        {% for message in messages %}
+          {% if "username_exist_error" in message.tags %}
+            <div class="text-sm text-red-600">
+              {{ message }}
+            </div>
+          {% elif "register_author_success" in message.tags %}
+            <div class="text-sm text-green-600">
+              {{ message }}
+            </div>
+          {% endif %}
+        {% endfor %}
+
+        <button class="w-full py-2.5 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition">
+          Continue
+        </button>
+      </form>
+
+      <!-- Login Link -->
+      <div class="mt-6 text-center text-sm text-gray-500">
+        By continuing, you agree to our Terms and Privacy Policy.
+        <div class="mt-2">
+          <a href="{% url 'login' %}"
+             class="font-medium text-gray-900 hover:underline">
+            Already have an account? Login
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>

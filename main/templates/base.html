@@ -1,106 +1,141 @@
-{%load static%}
-
+{% load static %}
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title%}{% endblock title%}</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}{% endblock title %}</title>
 
-    <!-- DaisyUI-->
-    <link
-      href="https://cdn.jsdelivr.net/npm/daisyui@5"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <!-- DaisyUI + Tailwind -->
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-    <!--Tailwind CSS-->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="{% static 'main.css' %}">
 
-    <!--main.css-->
-    <link rel="stylesheet" href="{% static "main.css" %}"> 
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/96d552640e.js" crossorigin="anonymous"></script>
+</head>
 
-  </head>
-  <body>
+<body class="bg-gray-50 text-gray-900">
 
-    <!--Navbar Starts-->
+<!-- ================= NAVBAR ================= -->
 
-    <div class="navbar bg-base-100 shadow-sm">
-  <div class="navbar-start">
-    <div class="dropdown">
-      <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /> </svg>
+<header class="sticky top-0 z-50 backdrop-blur-md bg-white/80 border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="navbar px-0">
+
+      <!-- Left: Logo -->
+      <div class="navbar-start">
+        <a href="{% url 'index' %}" class="text-xl font-semibold tracking-tight">
+          <img src="{% static 'logo_blogify.png' %}"
+               class="h-8 w-auto object-contain"
+               alt="Blog Logo">
+        </a>
       </div>
-      <ul
-        tabindex="-1"
-        class="menu menu-m dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-        <li><a>Homepage</a></li>
-        <li><a>Portfolio</a></li>
-        <li><a>About</a></li>
-      </ul>
+
+      <!-- Center: Desktop Navigation -->
+      <div class="navbar-center hidden md:flex">
+        <ul class="flex items-center gap-8 text-sm font-medium text-gray-700">
+          <li><a href="{% url 'index' %}" class="hover:text-black transition">Home</a></li>
+          <li><a href="{% url 'categories' %}" class="hover:text-black transition">Categories</a></li>
+          <li><a href="{% url 'authors' %}" class="hover:text-black transition">Authors</a></li>
+          <li><a href="#" class="hover:text-black transition">About</a></li>
+        </ul>
+      </div>
+
+      <!-- Right: Actions -->
+      <div class="navbar-end flex items-center gap-4">
+
+        <!-- Search Button -->
+        <button class="p-2 rounded-lg hover:bg-gray-100 transition"
+                onclick="document.getElementById('search_modal').showModal()">
+          <i class="fa-solid fa-magnifying-glass text-gray-700"></i>
+        </button>
+
+        <!-- Mobile Menu -->
+        <div class="dropdown md:hidden">
+          <button tabindex="0" class="p-2 rounded-lg hover:bg-gray-100">
+            <i class="fa-solid fa-bars text-gray-700"></i>
+          </button>
+          <ul tabindex="0"
+              class="menu dropdown-content mt-3 w-48 rounded-xl bg-white shadow-md border border-gray-100 p-2 right-0">
+            <li><a>Home</a></li>
+            <li><a>Categories</a></li>
+            <li><a>Authors</a></li>
+            <li><a>About</a></li>
+          </ul>
+        </div>
+
+      </div>
+
     </div>
   </div>
-  <div class="navbar-center">
-    <a class="btn btn-ghost text-xl" href="{% url "index" %}"><img src="{% static "logo_blogify.png" %}" alt=""></a>
+</header>
+
+<!-- ================= SEARCH MODAL ================= -->
+
+<dialog id="search_modal" class="modal">
+  <div class="modal-box rounded-2xl">
+
+    <h3 class="font-semibold text-lg mb-4">Search</h3>
+
+    <form id="search-form" class="flex gap-2">
+      {% csrf_token %}
+      <div class="flex-1">
+        {{ search_form }}
+      </div>
+      <button type="submit" class="btn btn-neutral">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </form>
+
+    <div id="results" class="mt-6 space-y-2 text-sm">
+      {% for post in search_results %}
+        <div>
+          <a href="#" class="hover:underline">{{ post.title }}</a>
+        </div>
+      {% endfor %}
+    </div>
+
   </div>
-  <div class="navbar-end">
-    <button class="btn btn-ghost btn-circle" onclick="my_modal_2.showModal()">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /> </svg>
-    </button>
-  </div>
-</div>
-    <!--Navbar End-->
 
-
-    <!--Search Modal-->
-
-    <dialog id="my_modal_2" class="modal">
-  <div class="modal-box">
-
-
-<form id="search-form">
-    {% csrf_token %}
-    {{ search_form }}
-    <button type="submit" class="btn">Search</button>
-</form>
-
-<div id="results">
-    {% for post in search_results %}
-        <div><a href="">{{ post.title }}</a></div>
-    {% endfor %}
-</div>
-
-
-</div>
   <form method="dialog" class="modal-backdrop">
     <button>close</button>
   </form>
 </dialog>
 
+<!-- ================= MAIN CONTENT ================= -->
 
-    {% block index-main %} {% endblock index-main %}
+<main class="min-h-screen">
+  {% block index-main %}{% endblock index-main %}
+</main>
 
-    <script>
-document.getElementById("search-form").addEventListener("submit", function(e) {
-    e.preventDefault(); // stop refresh
+<!-- ================= SEARCH SCRIPT ================= -->
+
+<script>
+const form = document.getElementById("search-form");
+
+if (form) {
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
 
     const formData = new FormData(this);
 
     fetch("/", {
-        method: "POST",
-        body: formData,
-        headers: {
-            "X-CSRFToken": formData.get("csrfmiddlewaretoken")
-        }
+      method: "POST",
+      body: formData,
+      headers: {
+        "X-CSRFToken": formData.get("csrfmiddlewaretoken")
+      }
     })
     .then(res => res.text())
     .then(html => {
-        document.getElementById("results").innerHTML = html;
+      document.getElementById("results").innerHTML = html;
     });
-});
+  });
+}
 </script>
 
-
-  </body>
+</body>
 </html>

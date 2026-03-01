@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}{% endblock title %}
+
+{% block index-main %}
+
+<div class="max-w-6xl mx-auto px-6 py-12">
+
+    <!-- Author Header -->
+    <div class="text-center mb-10">
+        <h1 class="text-2xl font-semibold text-gray-900">
+            {{ author.user.first_name }} {{ author.user.last_name }}
+        </h1>
+        <p class="text-sm text-gray-500 mt-1">
+            {{ posts|length }} Posts
+        </p>
+    </div>
+
+    <!-- Posts Grid -->
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+        {% for post in posts %}
+        <div class="bg-white rounded-2xl shadow-sm hover:shadow-md transition duration-200 p-6 flex flex-col justify-between">
+
+            <div>
+                <a href="{% url 'single_post' post.slug %}"
+                   class="text-lg font-semibold text-gray-900 hover:text-gray-700 transition">
+                    {{ post.title }}
+                </a>
+
+                <p class="text-sm text-gray-600 mt-3 leading-relaxed">
+                    {{ post.content|striptags|truncatechars:150 }}
+                </p>
+            </div>
+
+            <div class="mt-6">
+                <a href="{% url 'single_post' post.slug %}"
+                   class="text-sm font-medium text-gray-900 hover:underline">
+                    Read more →
+                </a>
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock index-main %}

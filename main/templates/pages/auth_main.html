@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Authors{% endblock title %}
+
+{% block index-main %}
+
+<div class="max-w-6xl mx-auto px-6 py-12">
+
+    <!-- Page Header -->
+    <div class="text-center mb-12">
+        <h1 class="text-3xl font-semibold text-gray-900">Authors</h1>
+        <p class="text-sm text-gray-500 mt-2">
+            {{ authors|length }} contributors
+        </p>
+    </div>
+
+    <!-- Authors Grid -->
+    <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+
+        {% for author in authors %}
+
+        <a href="{% url 'author_page' author.slug %}"
+           class="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition p-6 text-center">
+
+            <!-- Avatar Placeholder -->
+            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-lg font-medium">
+                {{ author.user.first_name|slice:":1" }}{{ author.user.last_name|slice:":1" }}
+            </div>
+
+            <!-- Name -->
+            <h2 class="text-sm font-semibold text-gray-900">
+                {{ author.user.first_name }} {{ author.user.last_name }}
+            </h2>
+
+            <!-- Username -->
+            <p class="text-xs text-gray-500 mt-1">
+                @{{ author.user.username }}
+            </p>
+
+        </a>
+
+        {% empty %}
+
+        <div class="col-span-full text-center text-gray-400 py-16">
+            No authors found.
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock index-main %}

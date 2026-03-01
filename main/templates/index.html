@@ -2,10 +2,43 @@
 
 {% block index-main %}
 
-<ul>
-    {% for sr in search_results %}
-        <li><a href="{% url "single_post" sr.slug %}" >{{sr.title}}</a></li>
+
+<div class="max-w-6xl mx-auto px-6 my-12">
+  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+    {% for post in posts %}
+    <div class="bg-white rounded-2xl shadow-sm hover:shadow-md transition duration-200 p-6 flex flex-col justify-between">
+
+        <div>
+            <a href="{% url 'single_post' post.slug %}"
+               class="text-lg font-semibold text-gray-900 hover:text-gray-700 transition">
+                {{ post.title }}
+            </a>
+
+            <p class="text-xs text-gray-500 mt-1">
+                By 
+                <a href="{% url 'author_page' post.author.slug %}"
+                   class="hover:underline">
+                    {{ post.author.user.first_name }} {{ post.author.user.last_name }}
+                </a>
+            </p>
+
+            <p class="text-sm text-gray-600 mt-4 leading-relaxed">
+                {{ post.content|striptags|truncatechars:160 }}
+            </p>
+        </div>
+
+        <div class="mt-6">
+            <a href="{% url 'single_post' post.slug %}"
+               class="text-sm font-medium text-gray-900 hover:underline">
+                Read more →
+            </a>
+        </div>
+
+    </div>
     {% endfor %}
-</ul>
+
+  </div>
+</div>
 
 {% endblock index-main %}

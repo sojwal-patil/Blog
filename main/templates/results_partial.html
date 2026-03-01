@@ -1,6 +1,6 @@
 {% for post in search_results %}
     <div class="post">
-        {{ post.title }}
+        <a href="{% url "singlepost" post.slug %}"  >{{ post.title }}</a>
     </div>
 {% empty %}
     <p>No results found</p>

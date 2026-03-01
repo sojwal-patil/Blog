@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Categories{% endblock title %}
+
+{% block index-main %}
+
+<div class="max-w-6xl mx-auto px-6 py-12">
+
+    <!-- Page Header -->
+    <div class="text-center mb-12">
+        <h1 class="text-3xl font-semibold text-gray-900">Categories</h1>
+        <p class="text-sm text-gray-500 mt-2">
+            {{ categories|length }} total categories
+        </p>
+    </div>
+
+    <!-- Categories Grid -->
+    <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+
+        {% for category in categories %}
+
+        <a href="{% url 'category_page' category.slug %}"
+           class="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition p-6 text-center">
+
+            <!-- Category Icon Placeholder -->
+            <div class="w-14 h-14 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 text-lg">
+                #
+            </div>
+
+            <!-- Category Name -->
+            <h2 class="text-sm font-semibold text-gray-900">
+                {{ category.category }}
+            </h2>
+
+        </a>
+
+        {% empty %}
+
+        <div class="col-span-full text-center text-gray-400 py-16">
+            No categories available.
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock index-main %}

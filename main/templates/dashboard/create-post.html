@@ -1,0 +1,57 @@
+{% extends "dashboard/dashboard-base.html" %} {% block index-main %}
+
+<style>
+  /* This forces the CKEditor container to ignore fixed pixel widths */
+  .django-ckeditor-widget {
+    width: 100% !important;
+    display: block !important;
+  }
+
+  .cke {
+    width: 90% !important;
+    margin: auto;
+    display: block;
+    border-radius:17px;
+    margin-top:20px;
+  }
+
+  #cke_1_top{
+    border-radius:20px;
+    border-top:1px solid gray;
+  }
+
+  #cke_1_bottom{
+    border-radius:20px;
+    border-bottom : 1px solid gray;
+  } 
+
+  input[type="checkbox"] {
+    display: none;
+  }
+  
+  input[type="checkbox"]:checked + span {
+    background-color: #9e3486;
+    color: white;
+  }
+</style>
+
+<form method="POST">
+  {% csrf_token %} {{ post_form.media }}
+
+  <div class="form-group flex justify-center my-5">
+    {{ post_form.title }}
+    <button type="submit" class="btn btn-neutral ml-[5px] rounded-[15px]"><i class="fa-solid fa-upload"></i> Publish</button> <br />
+  </div>
+
+  <div class="flex flex-wrap justify-center w-[70%] mx-auto">
+    {% for checkbox in post_form.category %}
+    <label class="cursor-pointer">
+      {{ checkbox.tag }}
+      <span class="btn rounded-[20px] m-1 text-[11px]"> {{ checkbox.choice_label }} </span>
+    </label>
+    {% endfor %}
+  </div>
+
+  <div class="form-group" class="m-auto block">{{ post_form.content }}</div>
+</form>
+{% endblock index-main %}

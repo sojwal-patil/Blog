@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}
+{{blog_post.title}}
+{% endblock title %}
+
+{% block index-main %}
+
+<div class="max-w-3xl mx-auto px-6 py-12">
+
+    <!-- Date -->
+    <div class="text-center text-xs text-gray-500 tracking-wide">
+        {{ blog_post.date }}
+    </div>
+
+    <!-- Title -->
+    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 text-center mt-4 leading-tight">
+        {{ blog_post.title }}
+    </h1>
+
+    <!-- Categories -->
+    <div class="flex flex-wrap justify-center gap-2 mt-6">
+        {% for category in categories %}
+        <a href="{% url 'category_page' category.slug %}"
+           class="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition">
+            #{{ category.category }}
+        </a>
+        {% endfor %}
+    </div>
+
+    <!-- Author -->
+    <div class="mt-6 text-center">
+        <a href="{% url 'author_page' blog_post.author.slug %}"
+           class="text-sm font-medium text-gray-700 hover:underline">
+            {{ blog_post.author.user.first_name }} {{ blog_post.author.user.last_name }}
+        </a>
+    </div>
+
+    <!-- Divider -->
+    <div class="border-t border-gray-200 my-8"></div>
+
+    <!-- Content -->
+    <article class="prose prose-gray max-w-none leading-relaxed">
+        {{ blog_post.content|safe }}
+    </article>
+
+</div>
+
+{% endblock index-main %}

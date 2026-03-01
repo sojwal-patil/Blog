@@ -1,0 +1,84 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}{% endblock title %}</title>
+
+  <!-- DaisyUI + Tailwind -->
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="{% static 'main.css' %}">
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/96d552640e.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+
+<!-- ================= DASHBOARD HEADER ================= -->
+
+<header class="border-b border-gray-200 bg-white">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="flex items-center justify-between h-16">
+
+      <!-- Left: Logo -->
+      <div class="flex items-center gap-8">
+        <a href="{% url 'dashboard' %}">
+          <img src="{% static 'logo_blogify.png' %}"
+               class="h-8 w-auto object-contain"
+               alt="Blog Logo">
+        </a>
+
+        <!-- Primary Navigation -->
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
+          <a href="{% url 'dashboard' %}" class="hover:text-black transition">
+            Posts
+          </a>
+          <a href="#" class="hover:text-black transition">
+            Pages
+          </a>
+        </nav>
+      </div>
+
+      <!-- Right Side -->
+      <div class="flex items-center gap-4">
+
+        <!-- Create Button (Primary Action) -->
+        <a href="{% url 'create-post' %}">
+          <button class="px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition">
+            <i class="fa-solid fa-plus mr-2"></i> Create
+          </button>
+        </a>
+
+        <!-- View Blog -->
+        <a href="{% url 'index' %}"
+           class="hidden md:inline text-sm text-gray-600 hover:text-black transition">
+          View Blog
+        </a>
+
+        <!-- Profile -->
+        <a href="{% url 'profile' %}"
+           class="p-2 rounded-lg hover:bg-gray-100 transition">
+          <i class="fa-regular fa-circle-user text-lg text-gray-600"></i>
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+</header>
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<main class="min-h-screen">
+  {% block index-main %}{% endblock index-main %}
+</main>
+
+</body>
+</html>
