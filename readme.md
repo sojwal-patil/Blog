@@ -1,32 +1,20 @@
 # Blog
 
-# Blogify
-
-Blogify is a multi-author blogging platform built with Django and styled using Tailwind CSS + DaisyUI.  
+This is multi-author blogging platform built with Django and styled using Tailwind CSS + DaisyUI.  
 It provides a public-facing blog and a private dashboard for content management.
 
 ## 📸 Screenshots
 
 <img src="https://i.ibb.co/C5801w97/Screenshot-2026-03-01-212142.png" />
-
 <img src="https://i.ibb.co/9mJ2R0xp/Screenshot-2026-03-01-212206.png" />
-
 <img src="https://i.ibb.co/zVF6qqT8/Screenshot-2026-03-01-212213.png" />
-
 <img src="https://i.ibb.co/Mxxt1FX1/Screenshot-2026-03-01-212222.png" />
-
 <img src="https://i.ibb.co/B5f1Wk99/Screenshot-2026-03-01-212238.png" />
-
 <img src="https://i.ibb.co/GQ5tDrmv/Screenshot-2026-03-01-212310.png" />
-
 <img src="https://i.ibb.co/bgZWBCpt/Screenshot-2026-03-01-212342.png" />
-
 <img src="https://i.ibb.co/wFkHKcJb/Screenshot-2026-03-01-212348.png" />
-
 <img src="https://i.ibb.co/SqgSfKM/Screenshot-2026-03-01-212401.png" />
-
 <img src="https://i.ibb.co/Myt8yJRD/Screenshot-2026-03-01-212408.png" />
-
 <img src="https://i.ibb.co/VpCH2dn3/Screenshot-2026-03-01-212415.png" />
 
 ## 🚀 Features
@@ -38,7 +26,6 @@ It provides a public-facing blog and a private dashboard for content management.
 - Author pages
 - Authors listing page
 - Categories listing page
-- Search functionality
 
 ### Authentication
 - User registration
@@ -78,8 +65,8 @@ It provides a public-facing blog and a private dashboard for content management.
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/your-username/blogify.git
-cd blogify
+git clone https://github.com/sojwal-patil/Blog
+cd blog
 ```
 
 ## Create virtual environment
