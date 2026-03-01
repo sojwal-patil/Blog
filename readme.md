@@ -86,13 +86,14 @@ pip install -r requirements.txt
 ## Run migrations
 
 ```bash
+python manage.py makemigrations
 python manage.py migrate
 ```
 
 ## Create Super User
 
 ```bash
-python manage.py createsuperuser 
+python manage.py runserver 
 ```
 
 ## Run developmental server
